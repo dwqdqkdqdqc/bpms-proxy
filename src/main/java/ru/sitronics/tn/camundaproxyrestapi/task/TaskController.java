@@ -5,8 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.sitronics.tn.camundaproxyrestapi.dto.TaskDto;
 
-import java.util.List;
-
 //TODO Validation
 
 @RestController
@@ -21,7 +19,7 @@ public class TaskController {
     }
 
     @GetMapping
-    public ResponseEntity<List<TaskDto>> getTaskByAssignee(@RequestParam String assignee) {
+    public ResponseEntity<TaskDto[]> getTaskByAssignee(@RequestParam String assignee) {
         return ResponseEntity.ok(taskService.getTaskByAssignee(assignee));
     }
 

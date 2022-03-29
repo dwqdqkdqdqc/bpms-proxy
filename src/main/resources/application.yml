@@ -1,0 +1,5 @@
+server:
+  port: 8081
+
+camunda:
+  uri: http://localhost:8080/engine-rest
