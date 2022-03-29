@@ -1,8 +1,7 @@
 package ru.sitronics.tn.camundaproxyrestapi.process_definition;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,14 +12,10 @@ import ru.sitronics.tn.camundaproxyrestapi.dto.ProcessInstanceDto;
 
 @RestController
 @RequestMapping("/process-definition")
+@RequiredArgsConstructor
 public class ProcessDefinitionController {
 
     private final ProcessDefinitionService processDefinitionService;
-
-    @Autowired
-    public ProcessDefinitionController(ProcessDefinitionService processDefinitionService) {
-        this.processDefinitionService = processDefinitionService;
-    }
 
     @PostMapping("/key/{key}/start")
     public ResponseEntity<ProcessInstanceDto> startProcess(@PathVariable String key) {

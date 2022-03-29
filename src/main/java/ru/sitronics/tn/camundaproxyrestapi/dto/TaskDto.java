@@ -4,26 +4,26 @@ import lombok.Data;
 
 @Data
 public class TaskDto {
-    String id;
-    String name;
-    String assignee;
-    String created;
-    String due;
-    String followUp;
-    String delegationState;
-    String description;
-    String executionId;
-    String owner;
-    String parentTaskId;
-    String priority;
-    String processDefinitionId;
-    String processInstanceId;
-    String caseDefinitionId;
-    String caseInstanceId;
-    String caseExecutionId;
-    String taskDefinitionKey;
-    boolean suspended;
-    String formKey;
-    CamundaFormRefDto camundaFormRef;
-    String tenantId;
+    private final String id;
+    private final String name;
+    private final String assignee;
+    private final String created;
+    private final String due;
+    private final String followUp;
+    private final String delegationState;
+    private final String description;
+    private final String executionId;
+    private final String owner;
+    private final String parentTaskId;
+    private final String priority;
+    private final String processDefinitionId;
+    private final String processInstanceId;
+    private final String caseDefinitionId;
+    private final String caseInstanceId;
+    private final String caseExecutionId;
+    private final String taskDefinitionKey;
+    private final boolean suspended;
+    private final String formKey;
+    private final CamundaFormRefDto camundaFormRef;
+    private final String tenantId;
 }

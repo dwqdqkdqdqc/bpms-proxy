@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class CamundaFormRefDto {
-    String key;
-    String binding;
-    String version;
+    private final String key;
+    private final String binding;
+    private final String version;
 }

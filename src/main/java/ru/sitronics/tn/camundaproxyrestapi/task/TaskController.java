@@ -24,9 +24,14 @@ public class TaskController {
     }
 
     //TODO JSON validator for request body
+    //TODO Body not null
     @PostMapping("/{taskId}/claim")
     public ResponseEntity<Void> claimTask(@PathVariable String taskId, @RequestBody String body) {
         taskService.claimTask(taskId, body);
         return ResponseEntity.noContent().build();
     }
+
+    //TODO JSON validator for request body
+//    @PostMapping("/{taskId}/complete")
+//    public ResponseEntity<>
 }
