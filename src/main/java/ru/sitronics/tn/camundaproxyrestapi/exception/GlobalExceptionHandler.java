@@ -30,7 +30,7 @@ public class GlobalExceptionHandler implements ErrorController {
         Map<String, Object> response = new HashMap<>();
         response.put("status", false);
         response.put("code", e.getHttpStatus().value());
-        response.put("message", getErrorMessage(request, e.getHttpStatus()));
+        response.put("message", e.getMessage());
         response.put("errors", e.getErrors());
         return ResponseEntity.status(e.getHttpStatus()).body(response);
     }

@@ -39,6 +39,7 @@ public class ProcessDefinitionServiceImpl implements ProcessDefinitionService {
             return this.restTemplate.postForObject(url, entity, ProcessInstanceDto.class);
 
         } catch (HttpStatusCodeException e) {
+            log.error(e.toString());
             throw new CustomApplicationException(e.getStatusCode(), e.getMessage());
         }
     }
