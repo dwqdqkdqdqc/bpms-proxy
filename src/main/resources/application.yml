@@ -2,7 +2,7 @@ server:
   port: 8081
 
 camunda:
-  uri: http://localhost:8080/engine-rest
+  uri: http://localhost:8100/engine-rest
 
 spring:
   jackson:
