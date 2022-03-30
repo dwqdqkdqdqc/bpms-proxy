@@ -6,12 +6,12 @@ import java.util.List;
 
 @Data
 public class ProcessInstanceDto {
-    private final List<LinkDto> links;
-    private final String id;
-    private final String definitionId;
-    private final String businessKey;
-    private final String caseInstanceId;
-    private final String tenantId;
-    private final boolean ended;
-    private final boolean suspended;
+    private List<LinkDto> links;
+    private String id;
+    private String definitionId;
+    private String businessKey;
+    private String caseInstanceId;
+    private String tenantId;
+    private boolean ended;
+    private boolean suspended;
 }

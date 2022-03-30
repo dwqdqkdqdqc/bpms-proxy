@@ -3,3 +3,7 @@ server:
 
 camunda:
   uri: http://localhost:8080/engine-rest
+
+spring:
+  jackson:
+    default-property-inclusion: NON_NULL

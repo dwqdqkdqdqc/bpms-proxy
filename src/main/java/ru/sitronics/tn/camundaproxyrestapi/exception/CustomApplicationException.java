@@ -2,6 +2,7 @@ package ru.sitronics.tn.camundaproxyrestapi.exception;
 
 import org.springframework.http.HttpStatus;
 
+import java.io.Serial;
 import java.util.Collections;
 import java.util.List;
 
@@ -10,6 +11,9 @@ https://github.com/SeunMatt/smattme-tutorials/blob/master/spring-boot-exception-
  */
 
 public class CustomApplicationException extends RuntimeException {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     private HttpStatus httpStatus;
     private List<String> errors;

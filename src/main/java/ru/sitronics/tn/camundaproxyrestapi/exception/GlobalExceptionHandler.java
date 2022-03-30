@@ -49,7 +49,7 @@ public class GlobalExceptionHandler implements ErrorController {
         return ResponseEntity.status(status).body(response);
     }
 
-    @RequestMapping("/error")
+    @RequestMapping(value = "/error", produces = "application/json")
     public ResponseEntity<Map<String, Object>> handleError(HttpServletRequest request) {
         HttpStatus httpStatus = getHttpStatus(request);
         String message = getErrorMessage(request, httpStatus);
@@ -89,6 +89,7 @@ public class GlobalExceptionHandler implements ErrorController {
         response.put("status", false);
         response.put("code", httpStatus.value());
         response.put("message", "Error occured");
+        //TODO Make clear error message
         response.put("errors", e.getLocalizedMessage());
         return ResponseEntity.status(httpStatus).body(response);
     }

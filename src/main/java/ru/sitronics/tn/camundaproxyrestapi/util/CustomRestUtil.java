@@ -12,7 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
-import ru.sitronics.tn.camundaproxyrestapi.dto.CamundaApiErrorMessage;
+import ru.sitronics.tn.camundaproxyrestapi.dto.CamundaApiExceptionDto;
 import ru.sitronics.tn.camundaproxyrestapi.exception.CustomApplicationException;
 
 @Component
@@ -25,27 +25,42 @@ public class CustomRestUtil {
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
 
-    public <T> T get(String endPointUri, Class<T> type) {
+    public <T> T get(String endPointUri, Class<T> clazz) {
 
         try {
             String url = camundaUri + endPointUri;
             log.info(url);
-            return this.restTemplate.getForObject(url, type);
+            return restTemplate.getForObject(url, clazz);
 
         } catch (HttpStatusCodeException e) {
             throw catchException(e);
         }
     }
 
-    public <T> T post(String endPointUri, String requestBody, Class<T> type) {
+    public <T> T post(String endPointUri, Class<T> clazz) {
 
         try {
             String url = camundaUri + endPointUri;
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
-            HttpEntity<String> entity = new HttpEntity<>(requestBody, headers);
-            log.info("URL: " + url + ", Request body: " + requestBody);
-            return this.restTemplate.postForObject(url, entity, type);
+            HttpEntity<Object> entity = new HttpEntity<>(headers);
+            log.info("URL: " + url);
+            return restTemplate.postForObject(url, entity, clazz);
+
+        } catch (HttpStatusCodeException e) {
+            throw catchException(e);
+        }
+    }
+
+    public <T> T post(String endPointUri, Object requestBody, Class<T> clazz) {
+
+        try {
+            String url = camundaUri + endPointUri;
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            HttpEntity<Object> entity = new HttpEntity<>(requestBody, headers);
+            log.info("URL: " + url + ", Request body object: " + requestBody);
+            return restTemplate.postForObject(url, entity, clazz);
 
         } catch (HttpStatusCodeException e) {
            throw catchException(e);
@@ -53,14 +68,14 @@ public class CustomRestUtil {
     }
 
     private CustomApplicationException catchException(HttpStatusCodeException e) {
-        CamundaApiErrorMessage camundaApiErrorMessage;
+        CamundaApiExceptionDto camundaApiExceptionDto;
         try {
-            camundaApiErrorMessage = objectMapper.readValue(e.getResponseBodyAsString(), CamundaApiErrorMessage.class);
+            camundaApiExceptionDto = objectMapper.readValue(e.getResponseBodyAsString(), CamundaApiExceptionDto.class);
         } catch (JsonProcessingException e1) {
             log.error(e1.toString());
             throw new CustomApplicationException(HttpStatus.INTERNAL_SERVER_ERROR, e1.getMessage());
         }
         log.error(e.toString());
-        throw new CustomApplicationException(e.getStatusCode(), camundaApiErrorMessage.getMessage());
+        throw new CustomApplicationException(e.getStatusCode(), camundaApiExceptionDto.getMessage());
     }
 }

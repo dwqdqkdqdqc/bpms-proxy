@@ -11,11 +11,11 @@ public class TaskDto {
     private final String due;
     private final String followUp;
     private final String delegationState;
-    private final String description;
+    private final Description description;
     private final String executionId;
     private final String owner;
     private final String parentTaskId;
-    private final String priority;
+    private final int priority;
     private final String processDefinitionId;
     private final String processInstanceId;
     private final String caseDefinitionId;

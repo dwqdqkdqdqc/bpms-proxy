@@ -6,5 +6,5 @@ import lombok.Data;
 public class CamundaFormRefDto {
     private final String key;
     private final String binding;
-    private final String version;
+    private final int version;
 }
