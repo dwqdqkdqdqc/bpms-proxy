@@ -12,4 +12,7 @@ public class Config {
     public RestTemplate restTemplate(RestTemplateBuilder builder) {
         return builder.build();
     }
+
+    //TODO Undertow
+    //TODO CORS
 }

@@ -1,8 +1,8 @@
 server:
-  port: 8081 #8099
+  port: 8081 #8099 #TODO Change port to 8080 or to ${SERVER_PORT}
 
 camunda:
-  uri: http://localhost:8080/engine-rest #http://localhost:8100/engine-rest
+  uri: http://localhost:8080/engine-rest #http://localhost:8100/engine-rest #TODO Change camunda url to ${CAMUNDA_HOST}
 
 spring:
   jackson:
