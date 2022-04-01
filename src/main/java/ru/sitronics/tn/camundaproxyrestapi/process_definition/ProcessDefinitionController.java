@@ -9,9 +9,7 @@ import ru.sitronics.tn.camundaproxyrestapi.dto.StartProcessInstanceDto;
 //TODO Validation
 
 @RestController
-@RequestMapping(
-        value = "/process-definition"
-)
+@RequestMapping("/process-definition")
 @RequiredArgsConstructor
 public class ProcessDefinitionController {
 

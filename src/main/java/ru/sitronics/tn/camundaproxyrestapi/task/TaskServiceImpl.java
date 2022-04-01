@@ -7,6 +7,8 @@ import ru.sitronics.tn.camundaproxyrestapi.dto.TaskDto;
 import ru.sitronics.tn.camundaproxyrestapi.dto.UserIdDto;
 import ru.sitronics.tn.camundaproxyrestapi.util.CustomRestUtil;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class TaskServiceImpl implements TaskService {
@@ -14,9 +16,9 @@ public class TaskServiceImpl implements TaskService {
     private final CustomRestUtil customRestUtil;
 
     @Override
-    public TaskDto[] getTaskByAssignee(String assignee) {
+    public List<TaskDto> getTaskByAssignee(String assignee) {
         String endPointUri = String.format("/task?assignee=%s", assignee);
-        return customRestUtil.get(endPointUri, TaskDto[].class);
+        return customRestUtil.getList(endPointUri, TaskDto.class);
     }
 
     @Override

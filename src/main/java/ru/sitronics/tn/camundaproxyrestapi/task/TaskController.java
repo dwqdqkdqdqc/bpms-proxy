@@ -1,6 +1,6 @@
 package ru.sitronics.tn.camundaproxyrestapi.task;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.sitronics.tn.camundaproxyrestapi.dto.CompleteTaskDto;
@@ -8,22 +8,19 @@ import ru.sitronics.tn.camundaproxyrestapi.dto.TaskDto;
 import ru.sitronics.tn.camundaproxyrestapi.dto.UserIdDto;
 
 import javax.validation.Valid;
+import java.util.List;
 
 //TODO Validation
 
 @RestController
 @RequestMapping("/task")
+@RequiredArgsConstructor
 public class TaskController {
 
     private final TaskService taskService;
 
-    @Autowired
-    public TaskController(TaskService taskService) {
-        this.taskService = taskService;
-    }
-
     @GetMapping
-    public ResponseEntity<TaskDto[]> getTaskByAssignee(@RequestParam String assignee) {
+    public ResponseEntity<List<TaskDto>> getTaskByAssignee(@RequestParam String assignee) {
         return ResponseEntity.ok(taskService.getTaskByAssignee(assignee));
     }
 

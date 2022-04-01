@@ -5,15 +5,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 import ru.sitronics.tn.camundaproxyrestapi.dto.CamundaApiExceptionDto;
 import ru.sitronics.tn.camundaproxyrestapi.exception.CustomApplicationException;
+
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -25,19 +25,20 @@ public class CustomRestUtil {
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
 
-    public <T> T get(String endPointUri, Class<T> clazz) {
+    public <T> List<T> getList(String endPointUri, Class<T> responseClass) {
 
         try {
             String url = camundaUri + endPointUri;
+            ParameterizedTypeReference<List<T>> responseType = new ParameterizedTypeReference<>() {};
             log.info(url);
-            return restTemplate.getForObject(url, clazz);
+            return restTemplate.exchange(url, HttpMethod.GET, null, responseType).getBody();
 
         } catch (HttpStatusCodeException e) {
             throw catchException(e);
         }
     }
 
-    public <T> T post(String endPointUri, Class<T> clazz) {
+    public <T> T post(String endPointUri, Class<T> responseClass) {
 
         try {
             String url = camundaUri + endPointUri;
@@ -45,14 +46,14 @@ public class CustomRestUtil {
             headers.setContentType(MediaType.APPLICATION_JSON);
             HttpEntity<Object> entity = new HttpEntity<>(headers);
             log.info("URL: " + url);
-            return restTemplate.postForObject(url, entity, clazz);
+            return restTemplate.postForObject(url, entity, responseClass);
 
         } catch (HttpStatusCodeException e) {
             throw catchException(e);
         }
     }
 
-    public <T> T post(String endPointUri, Object requestBody, Class<T> clazz) {
+    public <T> T post(String endPointUri, Object requestBody, Class<T> responseClass) {
 
         try {
             String url = camundaUri + endPointUri;
@@ -60,7 +61,7 @@ public class CustomRestUtil {
             headers.setContentType(MediaType.APPLICATION_JSON);
             HttpEntity<Object> entity = new HttpEntity<>(requestBody, headers);
             log.info("URL: " + url + ", Request body object: " + requestBody);
-            return restTemplate.postForObject(url, entity, clazz);
+            return restTemplate.postForObject(url, entity, responseClass);
 
         } catch (HttpStatusCodeException e) {
            throw catchException(e);

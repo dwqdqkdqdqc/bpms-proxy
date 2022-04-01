@@ -1,9 +1,12 @@
 server:
-  port: 8081
+  port: 8081 #8099
 
 camunda:
-  uri: http://localhost:8100/engine-rest
+  uri: http://localhost:8080/engine-rest #http://localhost:8100/engine-rest
 
 spring:
   jackson:
     default-property-inclusion: NON_NULL
+  #https://stackoverflow.com/questions/30549489/what-is-this-spring-jpa-open-in-view-true-property-in-spring-boot
+  jpa:
+    open-in-view: false

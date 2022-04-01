@@ -13,6 +13,10 @@ configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
+
+	all {
+		exclude group: "org.springframework.boot", module: "spring-boot-starter-logging"
+	}
 }
 
 repositories {
@@ -21,23 +25,28 @@ repositories {
 
 ext {
 	openapi = '1.6.6'
+	camunda = '7.16.0'
 }
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-log4j2'
 
+	/* Validation, added on 2022-03-30 */
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
-	/* Added on 2022-03-30 */
+	/* Open API, added on 2022-03-30 */
 	developmentOnly "org.springdoc:springdoc-openapi-ui:${openapi}"
 
 	runtimeOnly 'com.h2database:h2'
+
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation "org.mockito:mockito-core"
 }
 
 tasks.named('test') {
