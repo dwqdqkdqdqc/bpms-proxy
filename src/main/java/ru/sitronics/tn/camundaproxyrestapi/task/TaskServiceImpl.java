@@ -16,8 +16,8 @@ public class TaskServiceImpl implements TaskService {
     private final CustomRestUtil customRestUtil;
 
     @Override
-    public List<TaskDto> getTaskByAssignee(String assignee) {
-        String endPointUri = String.format("/task?assignee=%s", assignee);
+    public List<TaskDto> getTaskByAssignee(String assignee, int firstResult, int maxResults) {
+        String endPointUri = String.format("/task?assignee=%s&firstResult=%s&maxResults=%s", assignee, firstResult, maxResults);
         return customRestUtil.getList(endPointUri, TaskDto.class);
     }
 

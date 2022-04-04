@@ -20,8 +20,10 @@ public class TaskController {
     private final TaskService taskService;
 
     @GetMapping
-    public ResponseEntity<List<TaskDto>> getTaskByAssignee(@RequestParam String assignee) {
-        return ResponseEntity.ok(taskService.getTaskByAssignee(assignee));
+    public ResponseEntity<List<TaskDto>> getTaskByAssignee(@RequestParam String assignee,
+                                                           @RequestParam(defaultValue = "0") int firstResult,
+                                                           @RequestParam(defaultValue = "20") int maxResults) {
+        return ResponseEntity.ok(taskService.getTaskByAssignee(assignee, firstResult, maxResults));
     }
 
     //TODO JSON validator for request body

@@ -14,5 +14,4 @@ public class Config {
     }
 
     //TODO Undertow
-    //TODO CORS
 }

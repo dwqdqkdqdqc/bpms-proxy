@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public interface TaskService {
 
-    List<TaskDto> getTaskByAssignee(String assignee);
+    List<TaskDto> getTaskByAssignee(String assignee, int firstResult, int maxResults);
 
     void claimTask(String taskId, UserIdDto userId);
 
