@@ -13,7 +13,7 @@ import java.util.List;
 //TODO Validation
 
 @RestController
-@RequestMapping("/task")
+@RequestMapping("/api/task")
 @RequiredArgsConstructor
 public class TaskController {
 
