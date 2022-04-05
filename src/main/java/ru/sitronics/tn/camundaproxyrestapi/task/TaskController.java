@@ -10,8 +10,6 @@ import ru.sitronics.tn.camundaproxyrestapi.dto.UserIdDto;
 import javax.validation.Valid;
 import java.util.List;
 
-//TODO Validation
-
 @RestController
 @RequestMapping("/api/task")
 @RequiredArgsConstructor
@@ -26,8 +24,6 @@ public class TaskController {
         return ResponseEntity.ok(taskService.getTaskByAssignee(assignee, firstResult, maxResults));
     }
 
-    //TODO JSON validator for request body
-    //TODO Body not null
     @PostMapping("/{taskId}/claim")
     public ResponseEntity<Void> claimTask(@PathVariable String taskId, @Valid @RequestBody UserIdDto body) {
         taskService.claimTask(taskId, body);
@@ -40,7 +36,6 @@ public class TaskController {
         return ResponseEntity.noContent().build();
     }
 
-    //TODO JSON validator for request body
     @PostMapping("/{taskId}/complete")
     public ResponseEntity<Object> completeTask(@PathVariable String taskId,
                                                @RequestBody CompleteTaskDto completeTaskDto) {

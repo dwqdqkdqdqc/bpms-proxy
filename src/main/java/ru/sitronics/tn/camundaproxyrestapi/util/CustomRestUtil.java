@@ -5,14 +5,18 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 import ru.sitronics.tn.camundaproxyrestapi.dto.CamundaApiExceptionDto;
 import ru.sitronics.tn.camundaproxyrestapi.exception.CustomApplicationException;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Component
@@ -25,13 +29,16 @@ public class CustomRestUtil {
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
 
-    public <T> List<T> getList(String endPointUri, Class<T> responseClass) {
+    public <T> List<T> getList(String endPointUri, Class<T[]> responseClass) {
 
         try {
             String url = camundaUri + endPointUri;
-            ParameterizedTypeReference<List<T>> responseType = new ParameterizedTypeReference<>() {};
-            log.info(url);
-            return restTemplate.exchange(url, HttpMethod.GET, null, responseType).getBody();
+            T[] array = restTemplate.getForObject(url, responseClass);
+            log.info("URL: " + url);
+            if (array == null) {
+                return new ArrayList<>();
+            }
+            return Arrays.stream(array).toList();
 
         } catch (HttpStatusCodeException e) {
             throw catchException(e);

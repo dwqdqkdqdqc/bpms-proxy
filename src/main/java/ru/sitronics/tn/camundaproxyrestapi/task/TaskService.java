@@ -7,7 +7,6 @@ import ru.sitronics.tn.camundaproxyrestapi.dto.UserIdDto;
 
 import java.util.List;
 
-@Service
 public interface TaskService {
 
     List<TaskDto> getTaskByAssignee(String assignee, int firstResult, int maxResults);

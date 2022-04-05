@@ -1,3 +1,5 @@
+import org.springframework.boot.gradle.plugin.SpringBootPlugin
+
 buildscript {
 	ext {
 		spring = '2.6.5'
@@ -7,7 +9,7 @@ buildscript {
 
 plugins {
 	id 'org.springframework.boot' version "${spring}"
-	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+//	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
 }
 
@@ -16,13 +18,13 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
 
 configurations {
+	springBom
+	annotationProcessor.extendsFrom springBom
+	implementation.extendsFrom springBom
+//	compile.exclude module: 'spring-boot-starter-tomcat'
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
-
-//	all {
-//		exclude group: "org.springframework.boot", module: "spring-boot-starter-logging"
-//	}
 }
 
 repositories {
@@ -30,22 +32,24 @@ repositories {
 }
 
 dependencies {
-	//TODO SpringBom
+	springBom platform(SpringBootPlugin.BOM_COORDINATES)
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-//	implementation 'org.springframework.boot:spring-boot-starter-log4j2'
-	implementation 'org.springframework.boot:spring-boot-starter-security' //TODO version
+	implementation ('org.springframework.boot:spring-boot-starter-web') { exclude module: 'spring-boot-starter-tomcat' }
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'io.undertow:undertow-servlet'
 
 	/* Validation, added on 2022-03-30 */
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 
 	compileOnly 'org.projectlombok:lombok'
+
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
 	/* Open API, added on 2022-03-30 */
 	developmentOnly "org.springdoc:springdoc-openapi-ui:${openapi}"
 
 	runtimeOnly 'com.h2database:h2'
+	runtimeOnly 'org.springframework.boot:spring-boot-starter-undertow'
 
 	//TODO spring-boot-configuration-processor?
 	annotationProcessor 'org.projectlombok:lombok'
