@@ -11,3 +11,8 @@ spring:
   #https://stackoverflow.com/questions/30549489/what-is-this-spring-jpa-open-in-view-true-property-in-spring-boot
   jpa:
     open-in-view: false
+  # <- Dev #
+  devtools:
+    livereload:
+      port: 35730
+  # Dev -> #
