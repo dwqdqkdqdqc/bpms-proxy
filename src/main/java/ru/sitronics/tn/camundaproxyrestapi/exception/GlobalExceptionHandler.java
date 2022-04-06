@@ -27,7 +27,7 @@ public class GlobalExceptionHandler implements ErrorController {
     }
 
     @ExceptionHandler(CustomApplicationException.class)
-    public ResponseEntity<Map<String, Object>> handleError(CustomApplicationException e, HttpServletRequest request) {
+    public ResponseEntity<Map<String, Object>> handleError(CustomApplicationException e) {
         Map<String, Object> response = new HashMap<>();
         response.put("status", false);
         response.put("code", e.getHttpStatus().value());
