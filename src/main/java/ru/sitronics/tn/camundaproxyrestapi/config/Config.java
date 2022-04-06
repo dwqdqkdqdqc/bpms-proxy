@@ -9,20 +9,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
 @Configuration
-public class Config implements WebServerFactoryCustomizer<UndertowServletWebServerFactory> {
+public class Config {
 
     @Bean
     public RestTemplate restTemplate(RestTemplateBuilder builder) {
         return builder.build();
-    }
-
-    @Bean
-    public ServletWebServerFactory servletContainer() {
-        return new UndertowServletWebServerFactory();
-    }
-
-    @Override
-    public void customize(UndertowServletWebServerFactory factory) {
-
     }
 }
