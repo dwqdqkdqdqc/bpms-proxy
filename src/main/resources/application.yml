@@ -1,9 +1,8 @@
-
 server:
-  port: 8081 #8099 #TODO Change port to 8080 or to ${SERVER_PORT}
+  port: ${SERVER_PORT:8081}
 
 camunda:
-  uri: http://localhost:8080/engine-rest #http://localhost:8100/engine-rest #TODO Change camunda url to ${CAMUNDA_HOST}
+  uri: http://${CAMUNDA_HOST:localhost}:${CAMUNDA_PORT:8100}/engine-rest
 
 spring:
   jackson:
@@ -11,8 +10,3 @@ spring:
   #https://stackoverflow.com/questions/30549489/what-is-this-spring-jpa-open-in-view-true-property-in-spring-boot
   jpa:
     open-in-view: false
-  # <- Dev #
-  devtools:
-    livereload:
-      port: 35730
-  # Dev -> #
