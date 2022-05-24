@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -49,7 +48,6 @@ public class GlobalExceptionHandler implements ErrorController {
         return ResponseEntity.status(status).body(response);
     }
 
-    @RequestMapping(value = "/error", produces = "application/json")
     public ResponseEntity<Map<String, Object>> handleError(HttpServletRequest request) {
         HttpStatus httpStatus = getHttpStatus(request);
         String message = getErrorMessage(request, httpStatus);

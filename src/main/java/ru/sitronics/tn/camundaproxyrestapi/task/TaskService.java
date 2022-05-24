@@ -1,6 +1,5 @@
 package ru.sitronics.tn.camundaproxyrestapi.task;
 
-import org.springframework.stereotype.Service;
 import ru.sitronics.tn.camundaproxyrestapi.dto.CompleteTaskDto;
 import ru.sitronics.tn.camundaproxyrestapi.dto.TaskDto;
 import ru.sitronics.tn.camundaproxyrestapi.dto.UserIdDto;

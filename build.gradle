@@ -2,26 +2,33 @@ import org.springframework.boot.gradle.plugin.SpringBootPlugin
 
 buildscript {
 	ext {
-		spring = '2.6.5'
-		openapi = '1.6.6'
+		spring = '2.6.7'
+		openapi = '1.6.8'
 	}
 }
 
 plugins {
-	id 'org.springframework.boot' version "${spring}"
 	id 'java'
+	id 'org.springframework.boot' version "${spring}"
 }
 
 group = 'ru.sitronics.tn'
-version = '0.0.1-SNAPSHOT'
+//version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
 
 configurations {
+	all {
+		exclude module: 'spring-boot-starter-tomcat'
+	}
 	springBom
 	annotationProcessor.extendsFrom springBom
 	implementation.extendsFrom springBom
 	compileOnly {
 		extendsFrom annotationProcessor
+	}
+	developmentOnly.extendsFrom springBom
+	runtimeClasspath {
+		extendsFrom developmentOnly
 	}
 }
 
@@ -29,26 +36,20 @@ repositories {
 	mavenCentral()
 }
 
+jar {
+	enabled = false
+}
+
 dependencies {
 	springBom platform(SpringBootPlugin.BOM_COORDINATES)
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation ('org.springframework.boot:spring-boot-starter-web') { exclude module: 'spring-boot-starter-tomcat' }
-	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation ('org.springframework.boot:spring-boot-starter-undertow') { exclude module: 'undertow-websockets-jsr' }
-
-	/* Validation, added on 2022-03-30 */
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
-
 	compileOnly 'org.projectlombok:lombok'
-
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-
-	/* Open API, added on 2022-03-30 */
-	developmentOnly "org.springdoc:springdoc-openapi-ui:${openapi}"
-
-	runtimeOnly 'com.h2database:h2'
-
-	//TODO spring-boot-configuration-processor?
+	runtimeOnly 'org.postgresql:postgresql'
+	runtimeOnly "org.springdoc:springdoc-openapi-ui:${openapi}"
+	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation "org.mockito:mockito-core"

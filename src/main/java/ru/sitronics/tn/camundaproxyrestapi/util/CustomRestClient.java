@@ -22,7 +22,7 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class CustomRestUtil {
+public class CustomRestClient {
 
     @Value("${camunda.uri}")
     private String camundaUri;
