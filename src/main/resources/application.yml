@@ -1,0 +1,21 @@
+server:
+  port: ${SERVER_PORT:8081}
+
+camunda:
+  uri: http://${CAMUNDA_HOST:213.108.129.175}:${CAMUNDA_PORT:9090}/engine-rest
+
+spring:
+  jackson:
+    default-property-inclusion: NON_NULL
+  #https://stackoverflow.com/questions/30549489/what-is-this-spring-jpa-open-in-view-true-property-in-spring-boot
+  jpa:
+    open-in-view: false
+    hibernate.ddl-auto: update
+    properties.hibernate.default_schema: camunda_proxy
+    show-sql: true
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:213.108.129.175}:${DB_PORT:5432}/${DATABASE:postgres}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:transneft}
+    driver-class-name: org.postgresql.Driver
+    initialization-mode: always
