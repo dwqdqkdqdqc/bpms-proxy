@@ -6,20 +6,12 @@ import org.springframework.web.bind.annotation.*;
 import ru.sitronics.tn.camundaproxyrestapi.dto.ProcessInstanceDto;
 import ru.sitronics.tn.camundaproxyrestapi.dto.StartProcessInstanceDto;
 
-//TODO Validation
-
 @RestController
-@RequestMapping("/api/process-definition")
+@RequestMapping("/process-definition")
 @RequiredArgsConstructor
 public class ProcessDefinitionController {
 
     private final ProcessDefinitionService processDefinitionService;
-
-    @PostMapping("/key/{key}/start")
-    public ResponseEntity<ProcessInstanceDto> startProcess(@PathVariable String key,
-                                                           @RequestBody StartProcessInstanceDto startProcessInstanceDto) {
-        return ResponseEntity.ok(processDefinitionService.startProcess(key, startProcessInstanceDto));
-    }
 
     @PostMapping("/start-by-document-type")
     public ResponseEntity<ProcessInstanceDto> startProcessByDocumentType(@RequestParam String documentType,

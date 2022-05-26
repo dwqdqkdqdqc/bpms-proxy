@@ -5,23 +5,24 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.sitronics.tn.camundaproxyrestapi.dto.CompleteTaskDto;
 import ru.sitronics.tn.camundaproxyrestapi.dto.TaskDto;
+import ru.sitronics.tn.camundaproxyrestapi.dto.TaskQueryDto;
 import ru.sitronics.tn.camundaproxyrestapi.dto.UserIdDto;
 
 import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/task")
+@RequestMapping("/task")
 @RequiredArgsConstructor
 public class TaskController {
 
     private final TaskService taskService;
 
-    @GetMapping
-    public ResponseEntity<List<TaskDto>> getTaskByAssignee(@RequestParam String assignee,
-                                                           @RequestParam(defaultValue = "0") int firstResult,
-                                                           @RequestParam(defaultValue = "20") int maxResults) {
-        return ResponseEntity.ok(taskService.getTaskByAssignee(assignee, firstResult, maxResults));
+    @PostMapping
+    public ResponseEntity<List<TaskDto>> getTasks(@RequestParam(defaultValue = "0") int firstResult,
+                                                  @RequestParam(defaultValue = "20") int maxResults,
+                                                  @RequestBody TaskQueryDto taskQueryDto) {
+        return ResponseEntity.ok(taskService.getTasks(taskQueryDto, firstResult, maxResults));
     }
 
     @PostMapping("/{taskId}/claim")

@@ -1,13 +1,16 @@
 package ru.sitronics.tn.camundaproxyrestapi.task;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-import ru.sitronics.tn.camundaproxyrestapi.dto.CompleteTaskDto;
-import ru.sitronics.tn.camundaproxyrestapi.dto.TaskDto;
-import ru.sitronics.tn.camundaproxyrestapi.dto.UserIdDto;
+import ru.sitronics.tn.camundaproxyrestapi.dto.*;
 import ru.sitronics.tn.camundaproxyrestapi.util.CustomRestClient;
 
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -16,9 +19,33 @@ public class TaskServiceImpl implements TaskService {
     private final CustomRestClient customRestClient;
 
     @Override
-    public List<TaskDto> getTaskByAssignee(String assignee, int firstResult, int maxResults) {
-        String endPointUri = String.format("/task?assignee=%s&firstResult=%s&maxResults=%s", assignee, firstResult, maxResults);
-        return customRestClient.getList(endPointUri, TaskDto[].class);
+    public List<TaskDto> getTasks(TaskQueryDto taskQueryDto, int firstResult, int maxResults) {
+        String endPointUri = String.format("/task?firstResult=%s&maxResults=%s", firstResult, maxResults);
+        TaskDto[] taskDtos = customRestClient.post(endPointUri, taskQueryDto, TaskDto[].class);
+        String[] taskIds = Arrays.stream(taskDtos)
+                .map(TaskDto::getId).toArray(String[]::new);
+        VariableInstanceQueryDto variableInstanceQueryDto = new VariableInstanceQueryDto();
+        variableInstanceQueryDto.setTaskIdIn(taskIds);
+        VariableInstanceDto[] variableInstanceDtos = customRestClient
+                .post("/variable-instance", variableInstanceQueryDto, VariableInstanceDto[].class);
+        return Arrays.stream(taskDtos)
+                .map(taskDto -> {
+                    TaskWithVariablesDto taskWithVariablesDto = new TaskWithVariablesDto();
+                    BeanUtils.copyProperties(taskDto, taskWithVariablesDto);
+                    Map<String, VariableValueDto> variables = new HashMap<>();
+                    Arrays.stream(variableInstanceDtos)
+                            .filter(variableInstanceDto -> variableInstanceDto.getTaskId().equals(taskDto.getId()))
+                            .forEach(variableInstanceDto -> {
+                                VariableValueDto variableValueDto = new VariableValueDto();
+                                BeanUtils.copyProperties(variableInstanceDto, variableValueDto);
+                                variables.put(variableInstanceDto.getName(), variableValueDto);
+                            });
+                    if (!variables.isEmpty()) {
+                        taskWithVariablesDto.setVariables(variables);
+                    }
+                    return taskWithVariablesDto;
+                })
+                .collect(Collectors.toList());
     }
 
     @Override

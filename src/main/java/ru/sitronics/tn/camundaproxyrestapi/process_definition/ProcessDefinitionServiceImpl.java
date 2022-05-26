@@ -20,12 +20,6 @@ public class ProcessDefinitionServiceImpl implements ProcessDefinitionService {
     private final ProcessDocumentMappingRepository processDocumentMappingRepository;
 
     @Override
-    public ProcessInstanceDto startProcess(String key, StartProcessInstanceDto startProcessInstanceDto) {
-        String endPointUri = String.format("/process-definition/key/%s/start", key);
-        return customRestClient.post(endPointUri, startProcessInstanceDto, ProcessInstanceWithVariablesDto.class);
-    }
-
-    @Override
     public ProcessInstanceDto startProcessByDocumentType(String documentType, String documentId, String startedBy, StartProcessInstanceDto startProcessInstanceDto) {
         VariableValueDto documentIdVariable = new VariableValueDto();
         documentIdVariable.setType("String");
