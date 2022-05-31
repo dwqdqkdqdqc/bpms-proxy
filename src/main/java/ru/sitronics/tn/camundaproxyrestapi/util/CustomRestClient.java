@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -15,6 +17,9 @@ import org.springframework.web.client.RestTemplate;
 import ru.sitronics.tn.camundaproxyrestapi.dto.CamundaApiExceptionDto;
 import ru.sitronics.tn.camundaproxyrestapi.exception.CustomApplicationException;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -23,14 +28,12 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class CustomRestClient {
-
     @Value("${camunda.uri}")
     private String camundaUri;
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
 
     public <T> List<T> getList(String endPointUri, Class<T[]> responseClass) {
-
         try {
             String url = camundaUri + endPointUri;
             T[] array = restTemplate.getForObject(url, responseClass);
@@ -39,14 +42,12 @@ public class CustomRestClient {
                 return new ArrayList<>();
             }
             return Arrays.stream(array).toList();
-
         } catch (HttpStatusCodeException e) {
             throw catchException(e);
         }
     }
 
     public <T> T post(String endPointUri, Class<T> responseClass) {
-
         try {
             String url = camundaUri + endPointUri;
             HttpHeaders headers = new HttpHeaders();
@@ -54,22 +55,27 @@ public class CustomRestClient {
             HttpEntity<Object> entity = new HttpEntity<>(headers);
             log.info("URL: " + url);
             return restTemplate.postForObject(url, entity, responseClass);
-
         } catch (HttpStatusCodeException e) {
             throw catchException(e);
         }
     }
 
-    public <T> T post(String endPointUri, Object requestBody, Class<T> responseClass) {
+    public <T> T postJson(String endPointUri, Object requestBody, Class<T> responseClass) {
+        return post(endPointUri, requestBody, responseClass, MediaType.APPLICATION_JSON);
+    }
 
+    public <T> T postForm(String endPointUri, Object requestBody, Class<T> responseClass) {
+        return post(endPointUri, requestBody, responseClass, MediaType.MULTIPART_FORM_DATA);
+    }
+
+    private <T> T post(String endPointUri, Object requestBody, Class<T> responseClass, MediaType mediaType) {
         try {
             String url = camundaUri + endPointUri;
             HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.setContentType(mediaType);
             HttpEntity<Object> entity = new HttpEntity<>(requestBody, headers);
             log.info("URL: " + url + ", Request body object: " + requestBody);
             return restTemplate.postForObject(url, entity, responseClass);
-
         } catch (HttpStatusCodeException e) {
            throw catchException(e);
         }
@@ -85,5 +91,12 @@ public class CustomRestClient {
         }
         log.error(e.toString());
         throw new CustomApplicationException(e.getStatusCode(), camundaApiExceptionDto.getMessage());
+    }
+
+    public static Resource makeTempFile(byte[] bytes) throws IOException {
+        Path testFile = Files.createTempFile("schema", ".bpmn");
+        System.out.println("Creating and Uploading Test File: " + testFile);
+        Files.write(testFile, bytes);
+        return new FileSystemResource(testFile.toFile());
     }
 }

@@ -26,13 +26,13 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public List<TaskDto> getTasks(TaskQueryDto taskQueryDto, int firstResult, int maxResults) {
         String endPointUri = String.format("/task?firstResult=%s&maxResults=%s", firstResult, maxResults);
-        TaskDto[] taskDtos = customRestClient.post(endPointUri, taskQueryDto, TaskDto[].class);
+        TaskDto[] taskDtos = customRestClient.postJson(endPointUri, taskQueryDto, TaskDto[].class);
         String[] taskIds = Arrays.stream(taskDtos)
                 .map(TaskDto::getId).toArray(String[]::new);
         VariableInstanceQueryDto variableInstanceQueryDto = new VariableInstanceQueryDto();
         variableInstanceQueryDto.setTaskIdIn(taskIds);
         VariableInstanceDto[] variableInstanceDtos = customRestClient
-                .post("/variable-instance", variableInstanceQueryDto, VariableInstanceDto[].class);
+                .postJson("/variable-instance", variableInstanceQueryDto, VariableInstanceDto[].class);
         return Arrays.stream(taskDtos)
                 .map(taskDto -> {
                     TaskWithVariablesDto taskWithVariablesDto = new TaskWithVariablesDto();
@@ -56,7 +56,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public void claimTask(String taskId, UserIdDto body) {
         String endPointUri = String.format("/task/%s/claim", taskId);
-        customRestClient.post(endPointUri, body, Void.class);
+        customRestClient.postJson(endPointUri, body, Void.class);
     }
 
     @Override
@@ -68,6 +68,6 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public Object completeTask(String taskId, CompleteTaskDto completeTaskDto) {
         String endPointUri = String.format("/task/%s/complete", taskId);
-        return customRestClient.post(endPointUri, completeTaskDto, Object.class);
+        return customRestClient.postJson(endPointUri, completeTaskDto, Object.class);
     }
 }

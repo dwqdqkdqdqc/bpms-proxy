@@ -42,7 +42,7 @@ public class ProcessDefinitionServiceImpl implements ProcessDefinitionService {
 
         String processKey = getProcessKeyByDocumentName(documentType);
         String endPointUri = String.format("/process-definition/key/%s/start", processKey);
-        return customRestClient.post(endPointUri, startProcessInstanceDto, ProcessInstanceWithVariablesDto.class);
+        return customRestClient.postJson(endPointUri, startProcessInstanceDto, ProcessInstanceWithVariablesDto.class);
     }
 
     private String getProcessKeyByDocumentName(String documentType) {
