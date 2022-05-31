@@ -2,10 +2,10 @@ package ru.sitronics.tn.camundaproxyrestapi.process_definition;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.sitronics.tn.camundaproxyrestapi.dto.ProcessInstanceDto;
-import ru.sitronics.tn.camundaproxyrestapi.dto.ProcessInstanceWithVariablesDto;
-import ru.sitronics.tn.camundaproxyrestapi.dto.StartProcessInstanceDto;
-import ru.sitronics.tn.camundaproxyrestapi.dto.VariableValueDto;
+import ru.sitronics.tn.camundaproxyrestapi.dto.camunda.ProcessInstanceDto;
+import ru.sitronics.tn.camundaproxyrestapi.dto.camunda.ProcessInstanceWithVariablesDto;
+import ru.sitronics.tn.camundaproxyrestapi.dto.camunda.StartProcessInstanceDto;
+import ru.sitronics.tn.camundaproxyrestapi.dto.camunda.VariableValueDto;
 import ru.sitronics.tn.camundaproxyrestapi.exception.ProcessDocumentMappingException;
 import ru.sitronics.tn.camundaproxyrestapi.repository.ProcessDocumentMappingRepository;
 import ru.sitronics.tn.camundaproxyrestapi.util.CustomRestClient;

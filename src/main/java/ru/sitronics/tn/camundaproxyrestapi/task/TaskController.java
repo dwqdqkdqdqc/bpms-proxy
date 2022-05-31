@@ -3,13 +3,15 @@ package ru.sitronics.tn.camundaproxyrestapi.task;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.sitronics.tn.camundaproxyrestapi.dto.CompleteTaskDto;
-import ru.sitronics.tn.camundaproxyrestapi.dto.TaskDto;
-import ru.sitronics.tn.camundaproxyrestapi.dto.TaskQueryDto;
-import ru.sitronics.tn.camundaproxyrestapi.dto.UserIdDto;
+import ru.sitronics.tn.camundaproxyrestapi.dto.camunda.CompleteTaskDto;
+import ru.sitronics.tn.camundaproxyrestapi.dto.camunda.TaskDto;
+import ru.sitronics.tn.camundaproxyrestapi.dto.camunda.TaskQueryDto;
+import ru.sitronics.tn.camundaproxyrestapi.dto.camunda.UserIdDto;
+import ru.sitronics.tn.camundaproxyrestapi.model.TaskType;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/task")
@@ -17,6 +19,11 @@ import java.util.List;
 public class TaskController {
 
     private final TaskService taskService;
+
+    @GetMapping("/types")
+    public ResponseEntity<Map<TaskType, String>> getTaskTypes() {
+        return ResponseEntity.ok(taskService.getTaskTypes());
+    }
 
     @PostMapping
     public ResponseEntity<List<TaskDto>> getTasks(@RequestParam(defaultValue = "0") int firstResult,

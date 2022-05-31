@@ -1,4 +1,4 @@
-package ru.sitronics.tn.camundaproxyrestapi.dto;
+package ru.sitronics.tn.camundaproxyrestapi.dto.camunda;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

@@ -3,8 +3,8 @@ package ru.sitronics.tn.camundaproxyrestapi.process_definition;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.sitronics.tn.camundaproxyrestapi.dto.ProcessInstanceDto;
-import ru.sitronics.tn.camundaproxyrestapi.dto.StartProcessInstanceDto;
+import ru.sitronics.tn.camundaproxyrestapi.dto.camunda.ProcessInstanceDto;
+import ru.sitronics.tn.camundaproxyrestapi.dto.camunda.StartProcessInstanceDto;
 
 @RestController
 @RequestMapping("/process-definition")
