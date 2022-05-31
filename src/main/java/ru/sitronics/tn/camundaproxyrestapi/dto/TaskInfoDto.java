@@ -5,6 +5,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import ru.sitronics.tn.camundaproxyrestapi.model.TaskType;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 public class TaskInfoDto {
@@ -27,6 +28,7 @@ public class TaskInfoDto {
     private String processDefinitionId;
     private String processInstanceId;
     private String taskDefinitionKey;
+    private List<String> candidateGroups;
     private String documentId;
     private TaskType taskType;
     private boolean readByAssignee = false;
