@@ -3,13 +3,11 @@ package ru.sitronics.tn.camundaproxyrestapi.task;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-import ru.sitronics.tn.camundaproxyrestapi.dto.*;
+import ru.sitronics.tn.camundaproxyrestapi.dto.camunda.*;
+import ru.sitronics.tn.camundaproxyrestapi.model.TaskType;
 import ru.sitronics.tn.camundaproxyrestapi.util.CustomRestClient;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -17,6 +15,13 @@ import java.util.stream.Collectors;
 public class TaskServiceImpl implements TaskService {
 
     private final CustomRestClient customRestClient;
+
+    @Override
+    public Map<TaskType, String> getTaskTypes() {
+        Map<TaskType, String> m = new EnumMap<>(TaskType.class);
+        Arrays.asList(TaskType.values()).forEach(el -> m.put(el, el.getDisplayValue()));
+        return m;
+    }
 
     @Override
     public List<TaskDto> getTasks(TaskQueryDto taskQueryDto, int firstResult, int maxResults) {
