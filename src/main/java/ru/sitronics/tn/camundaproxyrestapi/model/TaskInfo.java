@@ -34,7 +34,7 @@ public class TaskInfo {
     private String processDefinitionId;
     private String processInstanceId;
     private String taskDefinitionKey;
-    @ElementCollection(targetClass=String.class)
+    @ElementCollection(fetch = FetchType.EAGER)
     private List<String> candidateGroups;
     private String documentId;
     @Enumerated(EnumType.STRING)
