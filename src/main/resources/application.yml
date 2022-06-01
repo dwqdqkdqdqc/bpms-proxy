@@ -10,7 +10,7 @@ spring:
   #https://stackoverflow.com/questions/30549489/what-is-this-spring-jpa-open-in-view-true-property-in-spring-boot
   jpa:
     open-in-view: false
-    hibernate.ddl-auto: update
+    hibernate.ddl-auto: validate
     properties.hibernate.default_schema: camunda_proxy
     show-sql: true
   datasource:
@@ -18,4 +18,4 @@ spring:
     username: ${DB_USER:postgres}
     password: ${DB_PASSWORD:transneft}
     driver-class-name: org.postgresql.Driver
-    initialization-mode: always
+  sql.init.mode: always
