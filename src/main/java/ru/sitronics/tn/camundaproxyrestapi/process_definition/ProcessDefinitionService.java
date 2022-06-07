@@ -5,4 +5,5 @@ import ru.sitronics.tn.camundaproxyrestapi.dto.camunda.StartProcessInstanceDto;
 
 public interface ProcessDefinitionService {
     ProcessInstanceDto startProcessByDocumentType(String documentType, String documentId, String startedBy, StartProcessInstanceDto startProcessInstanceDto);
+    ProcessInstanceDto startProcessByKey(String processKey, StartProcessInstanceDto startProcessInstanceDto);
 }

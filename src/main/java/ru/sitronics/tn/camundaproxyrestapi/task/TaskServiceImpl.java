@@ -24,6 +24,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    @Deprecated
     public List<TaskDto> getTasks(TaskQueryDto taskQueryDto, int firstResult, int maxResults) {
         String endPointUri = String.format("/task?firstResult=%s&maxResults=%s", firstResult, maxResults);
         TaskDto[] taskDtos = customRestClient.postJson(endPointUri, taskQueryDto, TaskDto[].class);

@@ -20,4 +20,10 @@ public class ProcessDefinitionController {
                                                                          @RequestBody StartProcessInstanceDto startProcessInstanceDto) {
         return ResponseEntity.ok(processDefinitionService.startProcessByDocumentType(documentType, documentId, startedBy, startProcessInstanceDto));
     }
+
+    @PostMapping("/key/{processKey}/start")
+    public ResponseEntity<ProcessInstanceDto> startProcessByKey(@PathVariable String processKey,
+                                                                @RequestBody StartProcessInstanceDto startProcessInstanceDto) {
+        return ResponseEntity.ok(processDefinitionService.startProcessByKey(processKey, startProcessInstanceDto));
+    }
 }
