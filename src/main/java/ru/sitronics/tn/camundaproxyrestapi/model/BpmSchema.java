@@ -4,11 +4,11 @@ import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.format.annotation.DateTimeFormat;
+import org.hibernate.annotations.UpdateTimestamp;
 import ru.sitronics.tn.camundaproxyrestapi.util.view.Views;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @Data
 @NoArgsConstructor
@@ -31,13 +31,17 @@ public class BpmSchema {
     @JsonView(Views.Simple.class)
     private String description;
     @JsonView(Views.Simple.class)
+    private boolean deployed;
+    @JsonView(Views.Simple.class)
     @Column(updatable = false,  nullable = false)
     private String createUser;
     @JsonView(Views.Simple.class)
     @Column(updatable = false, nullable = false)
-    private LocalDateTime createdDate;
+    @CreationTimestamp
+    private Instant createdDate;
     @JsonView(Views.Simple.class)
     private String modifyUser;
     @JsonView(Views.Simple.class)
-    private LocalDateTime modifiedDate;
+    @UpdateTimestamp
+    private Instant modifiedDate;
 }

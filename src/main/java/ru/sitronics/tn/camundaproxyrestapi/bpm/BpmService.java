@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import ru.sitronics.tn.camundaproxyrestapi.dto.DeploymentDto;
+import ru.sitronics.tn.camundaproxyrestapi.exception.CustomApplicationException;
 import ru.sitronics.tn.camundaproxyrestapi.model.BpmSchema;
 import ru.sitronics.tn.camundaproxyrestapi.repository.BpmRepository;
 import ru.sitronics.tn.camundaproxyrestapi.util.CustomRestClient;
@@ -26,22 +27,23 @@ public class BpmService {
         return bpmRepository.findAll();
     }
 
-    public Optional<BpmSchema> getSchema(Long id) {
-        return bpmRepository.findById(id);
+    public BpmSchema getSchema(Long id) {
+        return bpmRepository.findById(id).orElseThrow(() -> new CustomApplicationException("Wrong ID"));
     }
 
     public BpmSchema saveSchema(BpmSchema schema) {
         return bpmRepository.save(schema);
     }
 
-    public BpmSchema deploy(BpmSchema schema) {
+    public BpmSchema deploy(Long id) {
         try {
-            schema = saveSchema(schema);
+            BpmSchema schema = getSchema(id);
             LinkedMultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
             params.add(DeploymentParams.DEPLOYMENT_NAME.getValue(), schema.getProcessName());
             params.add("file", CustomRestClient.makeTempFile(schema.getXml().getBytes(StandardCharsets.UTF_8)));
             DeploymentDto response = customRestClient.postForm("/deployment/create", params, DeploymentDto.class);
-            return schema;
+            schema.setDeployed(true);
+            return saveSchema(schema);
         } catch (IOException e) {
             throw new InternalException("Can't make temporary file.");
         }
