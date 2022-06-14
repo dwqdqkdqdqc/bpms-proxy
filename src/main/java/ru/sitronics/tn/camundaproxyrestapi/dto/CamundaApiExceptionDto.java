@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 public class CamundaApiExceptionDto {
     @JsonProperty("type")
-    private final String type;
+    private String type;
     @JsonProperty("message")
-    private final String message;
+    private String message;
 }
