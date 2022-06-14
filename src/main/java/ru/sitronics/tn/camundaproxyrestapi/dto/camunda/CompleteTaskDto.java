@@ -6,6 +6,6 @@ import java.util.Map;
 
 @Data
 public class CompleteTaskDto {
-    private final Map<String, VariableValueDto> variables;
-    private final boolean withVariablesInReturn;
+    private Map<String, VariableValueDto> variables;
+    private boolean withVariablesInReturn;
 }
