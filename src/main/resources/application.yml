@@ -1,29 +1,24 @@
 server:
-  port: ${SERVER_PORT:8081}
   servlet:
     encoding:
       charset: UTF-8 # Charset of HTTP requests and responses. Added to the "Content-Type" header if not set explicitly
       enabled: true # Enable http encoding support
       force: true
 
-camunda:
-  uri: http://${CAMUNDA_HOST:213.108.129.175}:${CAMUNDA_PORT:9090}/engine-rest
-
 spring:
+  application.name: bpms-proxy
   profiles:
-    active: postgres
-
+    active: dev, dev-postgres
   jackson:
     default-property-inclusion: NON_NULL
-  #https://stackoverflow.com/questions/30549489/what-is-this-spring-jpa-open-in-view-true-property-in-spring-boot
   jpa:
     open-in-view: false
+    hibernate.ddl-auto: validate
     show-sql: true
     properties:
       hibernate:
         format_sql: true
+        default_batch_fetch_size: 20
+        # https://stackoverflow.com/questions/21257819/what-is-the-difference-between-hibernate-jdbc-fetch-size-and-hibernate-jdbc-batc
+        jdbc.batch_size: 20
   sql.init.mode: never
-
-logging:
-  level:
-    root: WARN

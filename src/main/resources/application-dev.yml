@@ -1,0 +1,20 @@
+bpms:
+  uri: http://${BPMS_HOST:213.108.129.175}:${BPMS_PORT:9090}/engine-rest
+
+server:
+  port: ${SERVER_PORT:8080}
+
+external-services:
+  documents:
+    host: http://10.5.0.2
+    port: 8089
+  tasks:
+    host: http://10.5.0.2
+    port: 8092
+  notifications:
+    host: http://10.5.0.2
+    port: 8100
+
+logging:
+  level:
+    root: WARN

@@ -1,2 +1,1 @@
-# Camunda Proxy REST API
-
+# BPMS Proxy
