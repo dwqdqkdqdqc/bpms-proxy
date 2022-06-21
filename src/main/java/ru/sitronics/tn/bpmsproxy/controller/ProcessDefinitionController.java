@@ -14,15 +14,6 @@ public class ProcessDefinitionController {
 
     private final ProcessDefinitionService processDefinitionService;
 
-    @PostMapping("/start-by-document-type")
-    @Deprecated
-    public ResponseEntity<ProcessInstanceDto> startProcessByDocumentType(@RequestParam String documentType,
-                                                                         @RequestParam String documentId,
-                                                                         @RequestParam String startedBy,
-                                                                         @RequestBody StartProcessInstanceDto startProcessInstanceDto) {
-        return ResponseEntity.ok(processDefinitionService.startProcessByDocumentType(documentType, documentId, startedBy, startProcessInstanceDto));
-    }
-
     @PostMapping("/key/{processKey}/start")
     public ResponseEntity<ProcessInstanceDto> startProcessByKey(@PathVariable String processKey,
                                                                 @RequestBody StartProcessInstanceDto startProcessInstanceDto) {
