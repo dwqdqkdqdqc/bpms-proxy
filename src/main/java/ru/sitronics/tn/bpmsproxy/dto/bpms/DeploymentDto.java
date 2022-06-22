@@ -1,11 +1,10 @@
-package ru.sitronics.tn.bpmsproxy.dto;
+package ru.sitronics.tn.bpmsproxy.dto.bpms;
 
 import lombok.Data;
 
 import java.util.Date;
 
 @Data
-@Deprecated
 public class DeploymentDto {
     private String id;
     private String name;
