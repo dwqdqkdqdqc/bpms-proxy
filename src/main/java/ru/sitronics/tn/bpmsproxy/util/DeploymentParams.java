@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-@Deprecated
 public enum DeploymentParams {
     DEPLOYMENT_NAME("deployment-name"),
     DEPLOYMENT_ACTIVATION_TIME("deployment-activation-time"),
