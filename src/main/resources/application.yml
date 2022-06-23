@@ -5,8 +5,6 @@ server:
       enabled: true # Enable http encoding support
       force: true
 
-jdbcAppName: "Microcervice: ${spring.application.name}"
-
 spring:
   application.name: bpms-proxy
   profiles.active: dev, dev-postgres
