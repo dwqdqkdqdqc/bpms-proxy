@@ -21,3 +21,9 @@ spring:
         # https://stackoverflow.com/questions/21257819/what-is-the-difference-between-hibernate-jdbc-fetch-size-and-hibernate-jdbc-batc
         jdbc.batch_size: 20
   sql.init.mode: never
+
+logging:
+  logback:
+    rollingpolicy:
+      max-history: 0
+      max-file-size: 25MB
