@@ -13,8 +13,8 @@ import ru.sitronics.tn.bpmsproxy.util.CustomRestClient;
 public class MessageServiceImpl implements MessageService {
     private final CustomRestClient customRestClient;
     @Override
-    public MessageCorrelationResultDto correlateMessage(CorrelationMessageDto correlationMessageDto) {
+    public MessageCorrelationResultDto[] correlateMessage(CorrelationMessageDto correlationMessageDto) {
         String endPointUri = "/message";
-        return customRestClient.postJson(endPointUri, correlationMessageDto, MessageCorrelationResultWithVariableDto.class);
+        return customRestClient.postJson(endPointUri, correlationMessageDto, MessageCorrelationResultWithVariableDto[].class);
     }
 }

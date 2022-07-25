@@ -19,7 +19,7 @@ public class MessageController {
     private final MessageService messageService;
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<MessageCorrelationResultDto> correlateMessage(@RequestBody CorrelationMessageDto correlationMessageDto) {
+    public ResponseEntity<MessageCorrelationResultDto[]> correlateMessage(@RequestBody CorrelationMessageDto correlationMessageDto) {
         return ResponseEntity.ok(messageService.correlateMessage(correlationMessageDto));
     }
 }

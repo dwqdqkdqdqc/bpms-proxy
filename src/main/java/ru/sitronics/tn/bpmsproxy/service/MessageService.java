@@ -4,5 +4,5 @@ import ru.sitronics.tn.bpmsproxy.dto.bpms.CorrelationMessageDto;
 import ru.sitronics.tn.bpmsproxy.dto.bpms.MessageCorrelationResultDto;
 
 public interface MessageService {
-    MessageCorrelationResultDto correlateMessage(CorrelationMessageDto correlationMessageDto);
+    MessageCorrelationResultDto[] correlateMessage(CorrelationMessageDto correlationMessageDto);
 }
