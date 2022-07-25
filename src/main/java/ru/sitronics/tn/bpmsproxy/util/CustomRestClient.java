@@ -34,30 +34,22 @@ public class CustomRestClient {
     private final ObjectMapper objectMapper;
 
     public <T> List<T> getList(String endPointUri, Class<T[]> responseClass) {
-        try {
-            String url = bpmsUri + endPointUri;
-            T[] array = restTemplate.getForObject(url, responseClass);
-            log.info("URL: " + url);
-            if (array == null) {
-                return new ArrayList<>();
-            }
-            return Arrays.stream(array).toList();
-        } catch (HttpStatusCodeException e) {
-            throw catchException(e);
+        String url = bpmsUri + endPointUri;
+        T[] array = restTemplate.getForObject(url, responseClass);
+        log.info("URL: " + url);
+        if (array == null) {
+            return new ArrayList<>();
         }
+        return Arrays.stream(array).toList();
     }
 
     public <T> T post(String endPointUri, Class<T> responseClass) {
-        try {
-            String url = bpmsUri + endPointUri;
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_JSON);
-            HttpEntity<Object> entity = new HttpEntity<>(headers);
-            log.info("URL: " + url);
-            return restTemplate.postForObject(url, entity, responseClass);
-        } catch (HttpStatusCodeException e) {
-            throw catchException(e);
-        }
+        String url = bpmsUri + endPointUri;
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<Object> entity = new HttpEntity<>(headers);
+        log.info("URL: " + url);
+        return restTemplate.postForObject(url, entity, responseClass);
     }
 
     public <T> T postJson(String endPointUri, Object requestBody, Class<T> responseClass) {
@@ -69,16 +61,12 @@ public class CustomRestClient {
     }
 
     private <T> T post(String endPointUri, Object requestBody, Class<T> responseClass, MediaType mediaType) {
-        try {
-            String url = bpmsUri + endPointUri;
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(mediaType);
-            HttpEntity<Object> entity = new HttpEntity<>(requestBody, headers);
-            log.info("URL: " + url + ", Request body object: " + requestBody);
-            return restTemplate.postForObject(url, entity, responseClass);
-        } catch (HttpStatusCodeException e) {
-           throw catchException(e);
-        }
+        String url = bpmsUri + endPointUri;
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(mediaType);
+        HttpEntity<Object> entity = new HttpEntity<>(requestBody, headers);
+        log.info("URL: " + url + ", Request body object: " + requestBody);
+        return restTemplate.postForObject(url, entity, responseClass);
     }
 
     private CustomApplicationException catchException(HttpStatusCodeException e) {
